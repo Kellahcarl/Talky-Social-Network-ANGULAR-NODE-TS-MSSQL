@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UserDetails } from '../../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +54,7 @@ export class UserService {
   // Check user details
   checkUserDetails(token: string): Observable<any> {
     // console.log(token);
-    
+
     const url = `${this.baseUrl}/check_user_details`;
     return this.http.get(url, { headers: this.getHeadersWithToken(token) });
   }
@@ -61,7 +62,7 @@ export class UserService {
   // Forgot password
   forgotPassword(email: string): Observable<any> {
     // console.log(email);
-    
+
     const url = `${this.baseUrl}/forgot`;
     return this.http.post(url, email, { headers: this.getHeaders() });
   }
@@ -70,6 +71,12 @@ export class UserService {
   resetPassword(user: any): Observable<any> {
     const url = `${this.baseUrl}/reset`;
     return this.http.post(url, user, { headers: this.getHeaders() });
+  }
+
+  updateUserImage(userDetails: any, token: string): Observable<any> {
+    const url = `${this.baseUrl}/profile`
+
+    return  this.http.post(url, userDetails, { headers: this.getHeadersWithToken(token) });
   }
 
   // Helper function to get headers
@@ -83,7 +90,7 @@ export class UserService {
   private getHeadersWithToken(token: string): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      token: token
+      token: token,
     });
   }
 }

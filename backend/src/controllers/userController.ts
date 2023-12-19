@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { execute, query } from "../services/dbconnect";
 import { v4 as uuidv4 } from "uuid";
-import { updatUser, user } from "../types/userInterfaces";
+import { UpdateUser, updatUser, user } from "../types/userInterfaces";
 import { generateToken } from "../services/tokenGenerator";
 import {
   validateLoginUser,
@@ -150,18 +150,26 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    const { user_id, user_name, email, profileImage, fullName } = req.body;
+    let { user_id, user_name, profileImage, fullName } = req.body;
+
+    console.log(profileImage);
+
+    // if (profileImage === "") {
+    //   profileImage =
+    //     "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=1434&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+    // }
 
     const { error } = validateUpdateuser.validate(req.body);
+    console.log(error);
+
     if (error)
       return res
         .status(400)
-        .send({ error: "check full name & email if they are correct" });
+        .send({ error: "check input infomation if its correct" });
 
-    const newUser: updatUser = {
+    const newUser: UpdateUser = {
       user_id,
       user_name,
-      email,
       profileImage,
       fullName,
     };
@@ -209,7 +217,6 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
     const { error } = validateUserEmail.validate(req.body);
     // console.log(error);
-    
 
     if (error) {
       return res.status(400).send({ error: "enter a valid email" });
@@ -287,4 +294,3 @@ export const checkUserDetails = async (request: any, res: Response) => {
     });
   }
 };
-

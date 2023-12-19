@@ -18,7 +18,7 @@ export const validateRegisterUser = Joi.object().keys({
       "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
     )
   ),
-  fullName:Joi.string().required(),
+  fullName: Joi.string().required(),
 });
 
 export const validateUserEmail = Joi.object().keys({
@@ -27,7 +27,8 @@ export const validateUserEmail = Joi.object().keys({
 
 export const validateUpdateuser = Joi.object().keys({
   user_name: Joi.string().required(),
-  email: Joi.string().email().required(),
+  fullName: Joi.string().required(),
+  profileImage: Joi.allow('').allow(null),
   user_id: Joi.string().min(8).required(),
 });
 
