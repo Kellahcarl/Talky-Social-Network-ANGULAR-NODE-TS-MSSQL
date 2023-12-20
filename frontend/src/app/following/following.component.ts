@@ -15,11 +15,12 @@ export class FollowingComponent {
   user_id = localStorage.getItem('user_id');
   followers!: number;
   followings!: number;
+  searchText = '';
 
   constructor(private followService: FollowService) {}
   ngOnInit() {
     this.fetchUsers();
-    this.GetUserFollowCounts()
+    this.GetUserFollowCounts();
   }
 
   GetUserFollowCounts() {

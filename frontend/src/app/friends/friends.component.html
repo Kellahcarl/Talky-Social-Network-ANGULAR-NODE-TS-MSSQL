@@ -4,10 +4,10 @@
     <div class="left_row_profile">
       <img id="portada" src="../../assets/images/portada.jpg" />
       <div class="left_row_profile">
-        <img id="profile_pic" src={{profilePic}} />
+        <img id="profile_pic" src="{{ profilePic }}" />
         <span
-          >{{userName}}<br />
-          <p>{{followers}} followers / {{followings}} followings</p></span
+          >{{ userName }}<br />
+          <p>{{ followers }} followers / {{ followings }} followings</p></span
         >
       </div>
     </div>
@@ -29,9 +29,24 @@
   </div>
 
   <div class="right_row" style="width: 80%">
+    <div class="row">
+      <div class="publish">
+        <div class="row_title">
+          <div class="search-container">
+            <input
+              type="search"
+              class="search-box"
+              placeholder="Type your search..."
+              [(ngModel)]="searchText"
+            />
+            <!-- <button class="search-button">Search</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row border-radius">
       <div class="friend">
-        <div class="friend_title" *ngFor="let user of users">
+        <div class="friend_title" *ngFor="let user of users | userSearch:searchText">
           <img src="{{ user.profileImage }}" alt="" />
           <span
             ><b>{{ user.fullName }}</b

@@ -17,11 +17,13 @@ export class FriendsComponent {
   followers!: number;
   followings!: number;
 
+  searchText = '';
+
   constructor(private followService: FollowService) {}
 
   ngOnInit() {
     this.fetchUsers();
-    this.GetUserFollowCounts()
+    this.GetUserFollowCounts();
   }
 
   GetUserFollowCounts() {
@@ -31,7 +33,7 @@ export class FriendsComponent {
           .getUserFollowCounts(this.user_id, this.token)
           .subscribe(
             (res) => {
-              console.log(res);
+              // console.log(res);
               this.followers = res.followers;
               this.followings = res.followings;
             },
@@ -55,7 +57,7 @@ export class FriendsComponent {
           .getFollowedUsers(this.user_id, this.token)
           .subscribe((res) => {
             this.users = res;
-            // console.log(res);
+            console.log(res);
           });
         // console.log(this.users);
       } catch (error) {

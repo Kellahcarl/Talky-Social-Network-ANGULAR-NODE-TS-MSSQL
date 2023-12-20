@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LandingComponent } from './landing/landing.component';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
+import { UserSearchPipe } from './pipes/user-search.pipe';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { FollowingComponent } from './following/following.component';
     LandingComponent,
     FollowersComponent,
     FollowingComponent,
+    UserSearchPipe,
   ],
   imports: [
     BrowserModule,

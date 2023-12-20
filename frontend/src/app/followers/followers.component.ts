@@ -14,6 +14,7 @@ export class FollowersComponent {
   user_id = localStorage.getItem('user_id');
   profilePic: string | null = localStorage.getItem('profilePic');
   userName: string | null = localStorage.getItem('user_name');
+  searchText = '';
 
   constructor(
     private userService: UserService,
@@ -22,7 +23,7 @@ export class FollowersComponent {
 
   ngOnInit() {
     this.fetchUsers();
-    this.GetUserFollowCounts()
+    this.GetUserFollowCounts();
   }
 
   followers!: number;
