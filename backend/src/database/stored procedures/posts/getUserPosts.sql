@@ -1,6 +1,6 @@
+CREATE or ALTER PROCEDURE getUserPosts
+@user_id VARCHAR(100)
 
-
-CREATE or ALTER PROCEDURE getPosts
 AS
 BEGIN
     SELECT
@@ -19,6 +19,8 @@ BEGIN
         likes l ON p.post_id = l.post_id
     LEFT JOIN
         comment c ON p.post_id = c.post_id
+    WHERE
+        p.created_by_user_id = @user_id
     GROUP BY
         p.post_id, p.created_by_user_id, u.fullName, u.user_name, u.profileImage, u.user_id, p.caption, p.postImage, p.created_at, p.isDeleted;
 END;

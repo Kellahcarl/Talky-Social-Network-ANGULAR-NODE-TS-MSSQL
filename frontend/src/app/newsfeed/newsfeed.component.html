@@ -117,7 +117,7 @@
                   'fa-heart-o': !isPostLiked
                 }"
               ></i>
-              <p>{{ post.likeCount }} Likes</p>
+              <p>{{ post.like_count }} Likes</p>
             </li>
           </ul>
           <ul class="feed_footer_right">
@@ -127,7 +127,7 @@
               (click)="fetchComments(post.post_id)"
             >
               <i class="fa fa-comments-o"></i>
-              {{ post.commentCount }} comments
+              {{ post.comment_count }} comments
             </li>
           </ul>
         </div>

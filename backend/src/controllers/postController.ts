@@ -168,6 +168,18 @@ export const getPosts = async (req: Request, res: Response) => {
   }
 };
 
+export const getUserPosts = async (req: Request, res: Response) => {
+  try {
+
+    const user_id= req.params.user_id
+    const procedureName = "getUserPosts";
+    const result = await execute(procedureName,{user_id});
+    return res.json(result.recordset);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getPost = async (req: Request, res: Response) => {
   try {
     const post_id = req.params.post_id;

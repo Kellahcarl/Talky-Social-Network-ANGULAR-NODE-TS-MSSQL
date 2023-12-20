@@ -8,3 +8,5 @@ CREATE TABLE likes (
 );
 
 drop table likes
+
+delete from likes 

@@ -25,6 +25,7 @@ export class ProfileComponent {
   token: string | null = localStorage.getItem('token');
   profilePic: string | null = localStorage.getItem('profilePic');
   userName: string | null = localStorage.getItem('user_name');
+  user_id:string |null = localStorage.getItem('user_id')
   totalLikes!: number;
   postDetails!: any;
 
@@ -162,19 +163,19 @@ export class ProfileComponent {
   }
 
   fetchPosts() {
-    if (!this.token) {
-      console.error('Token not found.');
-      return;
-    }
-
-    try {
-      this.postService.getAllPosts(this.token).subscribe((res) => {
+    if (this.token && this.user_id !== null) {
+     try {
+      this.postService.getUserPosts(this.user_id,this.token).subscribe((res) => {
         console.log(res);
         this.posts = res;
       });
     } catch (error) {
       console.log(error);
     }
+      return;
+    }else{ console.error('Token not found.');}
+
+    
   }
 
   fetchComments(post_id: string) {
@@ -368,6 +369,7 @@ export class ProfileComponent {
 
             // Check the response and update isPostLiked accordingly
             this.isPostLiked = res.message === 'Post Liked';
+            this.fetchPosts()
           });
       } else {
         console.log('There is no token or user_id');

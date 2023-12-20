@@ -49,6 +49,12 @@ export class PostService {
     });
   }
 
+  getUserPosts(user_id: string, token: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user/${user_id}`, {
+      headers: this.getHeadersWithToken(token),
+    });
+  }
+
   toggleLikePost(
     postId: string,
     userId: string,

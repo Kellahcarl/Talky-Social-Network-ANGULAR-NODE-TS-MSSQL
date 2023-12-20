@@ -37,7 +37,7 @@
               ><b>Profile</b></a
             >
             | <a routerLink="/about"><b>About</b></a> |
-            <a routerLink="/photos"><b>Photos</b> </a> |
+            
             <a routerLink="/followers"><b>followers</b> </a> |
             <a routerLink="/followings"><b>followings</b> </a>
           </span>
@@ -105,11 +105,11 @@
     </div>
 
     <div class="row border-radius" *ngFor="let post of posts; let i = index">
-      <div class="feed" (mouseenter)="fetchPostDetails(post.post_id)">
+      <div class="feed" >
         <div class="feed_title">
           <img src="{{ post.profileImage }}" alt="" />
           <span
-            ><b>{{ post.fullName }}</b> shared a <a routerLink="photos">Post</a
+            ><b>You</b> shared a <a routerLink="photos">Post</a
             ><br />
             <p>{{ post.created_at | date }}</p></span
           >
@@ -136,7 +136,7 @@
                   'fa-heart-o': !isPostLiked
                 }"
               ></i>
-              <p *ngIf="postDetails">Likes: {{ postDetails.likes }}</p>
+              <p >Likes: {{ post.like_count }}</p>
             </li>
           </ul>
           <ul class="feed_footer_right">
@@ -144,10 +144,10 @@
               class="hover-orange"
               (click)="toggleComments(post)"
               (click)="fetchComments(post.post_id)"
-              *ngIf="postDetails"
+              
             >
               <i class="fa fa-comments-o"></i>
-              {{ postDetails.comments }} comments
+              {{ post.comment_count }} comments
             </li>
           </ul>
         </div>
