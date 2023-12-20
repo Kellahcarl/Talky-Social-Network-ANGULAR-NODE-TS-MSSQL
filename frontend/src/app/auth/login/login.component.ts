@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/services/user/user.service';
+import { FollowService } from 'src/app/services/follow/follow.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private loginService: UserService
+    private loginService: UserService,
+    private followService : FollowService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -58,6 +60,10 @@ export class LoginComponent {
               // console.log(data);
 
               if ('info' in data) {
+
+                
+
+               
                
                   localStorage.setItem('user_name', data.info.user_name!);
                 localStorage.setItem('user_id', data.info.user_id);

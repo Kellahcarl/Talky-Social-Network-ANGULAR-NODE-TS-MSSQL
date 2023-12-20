@@ -12,14 +12,40 @@ export class FriendsComponent {
 
   token = localStorage.getItem('token');
   user_id = localStorage.getItem('user_id');
+  profilePic: string | null = localStorage.getItem('profilePic');
+  userName: string | null = localStorage.getItem('user_name');
+  followers!: number;
+  followings!: number;
 
-  constructor(
-   
-    private followService: FollowService
-  ) {}
+  constructor(private followService: FollowService) {}
 
   ngOnInit() {
     this.fetchUsers();
+    this.GetUserFollowCounts()
+  }
+
+  GetUserFollowCounts() {
+    try {
+      if (this.user_id && this.token) {
+        this.followService
+          .getUserFollowCounts(this.user_id, this.token)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.followers = res.followers;
+              this.followings = res.followings;
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      } else {
+        console.log('There is no token or user_id');
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   fetchUsers = async () => {
@@ -29,7 +55,7 @@ export class FriendsComponent {
           .getFollowedUsers(this.user_id, this.token)
           .subscribe((res) => {
             this.users = res;
-            console.log(res); 
+            // console.log(res);
           });
         // console.log(this.users);
       } catch (error) {
@@ -57,8 +83,7 @@ export class FriendsComponent {
                 userToUpdate.isFollowed = true;
                 userToUpdate.followersCount += 1; // Assuming you have a count property
               }
-              this.fetchUsers()
-
+              this.fetchUsers();
             },
             (error) => {
               console.error('Failed to follow user:', error);

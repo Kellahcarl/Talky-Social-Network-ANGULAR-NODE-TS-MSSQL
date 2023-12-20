@@ -9,16 +9,41 @@ import { FollowService } from '../services/follow/follow.service';
 })
 export class FollowingComponent {
   users: any[] = [];
-
+  profilePic: string | null = localStorage.getItem('profilePic');
+  userName: string | null = localStorage.getItem('user_name');
   token = localStorage.getItem('token');
   user_id = localStorage.getItem('user_id');
+  followers!: number;
+  followings!: number;
 
-  constructor(
-  
-    private followService: FollowService
-  ) {}
+  constructor(private followService: FollowService) {}
   ngOnInit() {
     this.fetchUsers();
+    this.GetUserFollowCounts()
+  }
+
+  GetUserFollowCounts() {
+    try {
+      if (this.user_id && this.token) {
+        this.followService
+          .getUserFollowCounts(this.user_id, this.token)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.followers = res.followers;
+              this.followings = res.followings;
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      } else {
+        console.log('There is no token or user_id');
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   fetchUsers = async () => {

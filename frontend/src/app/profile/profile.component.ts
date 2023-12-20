@@ -7,6 +7,7 @@ import { PostService } from '../services/post/post.service';
 import { CommentService } from '../services/comments/comment.service';
 import { Comment, editComment } from '../interfaces/comment';
 import Swal from 'sweetalert2';
+import { FollowService } from '../services/follow/follow.service';
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +38,8 @@ export class ProfileComponent {
     private formBuilder: FormBuilder,
     private upload: CloudinaryService,
     private postService: PostService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private followService : FollowService
   ) {
     this.postForm = this.formBuilder.group({
       postImage: '',
@@ -52,6 +54,34 @@ export class ProfileComponent {
   }
   ngOnInit() {
     this.fetchPosts();
+    this.GetUserFollowCounts()
+  }
+
+  followers!: number;
+  followings!: number;
+
+  GetUserFollowCounts() {
+    try {
+      if (this.userId && this.token) {
+        this.followService
+          .getUserFollowCounts(this.userId, this.token)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.followers = res.followers;
+              this.followings = res.followings;
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      } else {
+        console.log('There is no token or user_id');
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   onSelectPostImage(event: any) {
     // console.log(event);

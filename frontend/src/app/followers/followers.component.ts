@@ -12,14 +12,44 @@ export class FollowersComponent {
 
   token = localStorage.getItem('token');
   user_id = localStorage.getItem('user_id');
+  profilePic: string | null = localStorage.getItem('profilePic');
+  userName: string | null = localStorage.getItem('user_name');
 
   constructor(
     private userService: UserService,
     private followService: FollowService
-  ) { }
-  
+  ) {}
+
   ngOnInit() {
-    this.fetchUsers()
+    this.fetchUsers();
+    this.GetUserFollowCounts()
+  }
+
+  followers!: number;
+  followings!: number;
+
+  GetUserFollowCounts() {
+    try {
+      if (this.user_id && this.token) {
+        this.followService
+          .getUserFollowCounts(this.user_id, this.token)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.followers = res.followers;
+              this.followings = res.followings;
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      } else {
+        console.log('There is no token or user_id');
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   fetchUsers = async () => {

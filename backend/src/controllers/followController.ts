@@ -138,30 +138,17 @@ export const followingPosts = async (
   }
 };
 
-export const getFollowersCount = async (req: Request, res: Response) => {
+
+
+export const getUserFollowCounts = async (req: Request, res: Response) => {
   try {
     const { user_id } = req.params;
 
-    const result = await execute(GET_FOLLOWERS_COUNT_PROCEDURE, {
-      p_user_id: user_id,
+    const result = await execute("GetUserFollowCounts", {
+      user_id,
     });
 
-    res.status(200).json({ followers_count: result });
-  } catch (error) {
-    console.error("Error getting followers count:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
-export const getFollowingsCount = async (req: Request, res: Response) => {
-  try {
-    const { user_id } = req.params;
-
-    const result = await execute(GET_FOLLOWINGS_COUNT_PROCEDURE, {
-      p_user_id: user_id,
-    });
-
-    res.status(200).json({ result });
+    res.status(200).json(result.recordset[0] );
   } catch (error) {
     console.error("Error getting followings count:", error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -47,6 +47,14 @@ export class FollowService {
       headers: this.getHeadersWithToken(token),
     });
   }
+  getUserFollowCounts(loggedInUserID: string, token: string): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/getUserFollowCounts/${loggedInUserID}`,
+      {
+        headers: this.getHeadersWithToken(token),
+      }
+    );
+  }
 
   unfollowUser(
     follower_id: string,

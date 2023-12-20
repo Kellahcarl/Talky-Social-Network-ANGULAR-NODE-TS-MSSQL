@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user/user.service';
 import Swal from 'sweetalert2';
 import { CloudinaryService } from '../services/cloudinary/cloudinary.service';
+import { FollowService } from '../services/follow/follow.service';
 
 @Component({
   selector: 'app-about',
@@ -12,6 +13,9 @@ import { CloudinaryService } from '../services/cloudinary/cloudinary.service';
 export class AboutComponent {
   token = localStorage.getItem('token');
   user_id = localStorage.getItem('user_id');
+  profilePic: string | null = localStorage.getItem('profilePic');
+  profileName: string | null = localStorage.getItem('user_name');
+ 
   profileImage: string = '';
   userName: string = '';
   userEmail: string = '';
@@ -27,7 +31,8 @@ export class AboutComponent {
     private fb: FormBuilder,
     private userService: UserService,
     private el: ElementRef,
-    private upload: CloudinaryService
+    private upload: CloudinaryService,
+    private followService: FollowService
   ) {
     this.modalForm = this.fb.group({
       profileImage: '',
@@ -38,6 +43,34 @@ export class AboutComponent {
 
   ngOnInit() {
     this.fetchuser();
+    this.GetUserFollowCounts();
+  }
+
+  followers!: number;
+  followings!: number;
+
+  GetUserFollowCounts() {
+    try {
+      if (this.user_id && this.token) {
+        this.followService
+          .getUserFollowCounts(this.user_id, this.token)
+          .subscribe(
+            (res) => {
+              console.log(res);
+              this.followers = res.followers;
+              this.followings = res.followings;
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      } else {
+        console.log('There is no token or user_id');
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   @HostListener('document:click', ['$event'])
