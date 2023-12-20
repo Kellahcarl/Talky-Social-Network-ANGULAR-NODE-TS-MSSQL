@@ -25,9 +25,10 @@ export class ProfileComponent {
   token: string | null = localStorage.getItem('token');
   profilePic: string | null = localStorage.getItem('profilePic');
   userName: string | null = localStorage.getItem('user_name');
-  user_id:string |null = localStorage.getItem('user_id')
+  user_id: string | null = localStorage.getItem('user_id');
   totalLikes!: number;
   postDetails!: any;
+  userId = localStorage.getItem('user_id');
 
   showEditCommentForm = false;
   editCommentForm!: FormGroup;
@@ -162,20 +163,26 @@ export class ProfileComponent {
     }
   }
 
+  isUserLiked(likes: any[], userId: string | null): boolean {
+    return likes.some((like) => like.user_id === userId);
+  }
+
   fetchPosts() {
     if (this.token && this.user_id !== null) {
-     try {
-      this.postService.getUserPosts(this.user_id,this.token).subscribe((res) => {
-        console.log(res);
-        this.posts = res;
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      try {
+        this.postService
+          .getUserPosts(this.user_id, this.token)
+          .subscribe((res) => {
+            console.log(res);
+            this.posts = res.new_posts;
+          });
+      } catch (error) {
+        console.log(error);
+      }
       return;
-    }else{ console.error('Token not found.');}
-
-    
+    } else {
+      console.error('Token not found.');
+    }
   }
 
   fetchComments(post_id: string) {
@@ -369,7 +376,7 @@ export class ProfileComponent {
 
             // Check the response and update isPostLiked accordingly
             this.isPostLiked = res.message === 'Post Liked';
-            this.fetchPosts()
+            this.fetchPosts();
           });
       } else {
         console.log('There is no token or user_id');

@@ -37,7 +37,7 @@
               ><b>Profile</b></a
             >
             | <a routerLink="/about"><b>About</b></a> |
-            
+
             <a routerLink="/followers"><b>followers</b> </a> |
             <a routerLink="/followings"><b>followings</b> </a>
           </span>
@@ -54,25 +54,31 @@
         </div>
         <form [formGroup]="postForm" (ngSubmit)="sharePost()">
           <div class="publish_textarea">
-            <img
-              class="border-radius-image"
-              src="../../assets/images/user.jpg"
-              alt=""
-            />
-            <div style="display: flex; flex-direction: column">
-              <textarea
+            <img class="border-radius-image" src="{{ profilePic }}" alt="" />
+            <div style="display: flex; flex-direction: column" style="width: 100%;">
+              <textarea style="width: 100%;"
                 type="text"
-                placeholder="Whats up, John?"
+                placeholder="write a caption {{ userName }}"
                 style="resize: none"
                 formControlName="caption"
               ></textarea>
-              <div
-                *ngIf="
-                  selectedPostType === 'image' || selectedPostType === 'video'
-                "
-              >
-                <ngx-dropzone (change)="onSelectPostImage($event)">
+              <div *ngIf="selectedPostType === 'image'" style="width: 100%;" >
+                <ngx-dropzone (change)="onSelectPostImage($event)" style="width: 100%;">
                   <ngx-dropzone-label>Drop Post Image</ngx-dropzone-label>
+                  <ngx-dropzone-preview
+                    *ngFor="let f of postFiles"
+                    [removable]="true"
+                    (removed)="onRemovePostImage(f)"
+                  >
+                    <ngx-dropzone-label
+                      >{{ f.name }} ({{ f.type }})</ngx-dropzone-label
+                    >
+                  </ngx-dropzone-preview>
+                </ngx-dropzone>
+              </div>
+              <div *ngIf="selectedPostType === 'video'">
+                <ngx-dropzone (change)="onSelectPostImage($event)" style="width: 100%;">
+                  <ngx-dropzone-label>Drop Post video</ngx-dropzone-label>
                   <ngx-dropzone-preview
                     *ngFor="let f of postFiles"
                     [removable]="true"
@@ -105,12 +111,11 @@
     </div>
 
     <div class="row border-radius" *ngFor="let post of posts; let i = index">
-      <div class="feed" >
+      <div class="feed">
         <div class="feed_title">
           <img src="{{ post.profileImage }}" alt="" />
           <span
-            ><b>You</b> shared a <a routerLink="photos">Post</a
-            ><br />
+            ><b>You</b> shared a <a routerLink="photos">Post</a><br />
             <p>{{ post.created_at | date }}</p></span
           >
         </div>
@@ -124,27 +129,26 @@
         <div class="feed_footer">
           <ul class="feed_footer_left">
             <li
-              class="hover-orange selected-orange"
-              (click)="toggleLike(post.post_id)"
-              style="display: flex; align-content: center"
-            >
-              <i
-                class="fa"
-                style="padding: 1rem"
-                [ngClass]="{
-                  'fa-heart': isPostLiked,
-                  'fa-heart-o': !isPostLiked
-                }"
-              ></i>
-              <p >Likes: {{ post.like_count }}</p>
-            </li>
+  class="hover-orange selected-orange"
+  (click)="toggleLike(post.post_id)"
+  style="display: flex; align-content: center"
+>
+  <i
+    class="fa"
+    style="padding: 1rem"
+    [ngClass]="{
+      'fa-heart': isUserLiked(post.likes, userId),
+      'fa-heart-o': !isUserLiked(post.likes, userId)
+    }"
+  ></i>
+  <p>{{ post.like_count }} Likes</p>
+</li>
           </ul>
           <ul class="feed_footer_right">
             <li
               class="hover-orange"
               (click)="toggleComments(post)"
               (click)="fetchComments(post.post_id)"
-              
             >
               <i class="fa fa-comments-o"></i>
               {{ post.comment_count }} comments

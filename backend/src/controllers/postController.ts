@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { execute, handleTVP, query } from "../services/dbconnect";
 import { v4 as uuidv4 } from "uuid";
-import { isEmpty } from "lodash";
+import { forEach, isEmpty } from "lodash";
 import { createPostSchema } from "../validators/postValidator";
 import { Post } from "../types/postInterface";
 
@@ -162,19 +162,43 @@ export const getPosts = async (req: Request, res: Response) => {
   try {
     const procedureName = "getPosts";
     const result = await query(`EXEC ${procedureName}`);
-    return res.json(result.recordset);
+
+    const new_posts: any[] = [];
+
+    for (const element of result.recordset) {
+      const post_id = element.post_id;
+
+      const result2 = await execute("getPostLikes", { post_id });
+
+      element.likes = result2.recordset;
+      new_posts.push(element);
+    }
+
+    return res.json({ new_posts });
   } catch (error) {
     console.log(error);
+    // Handle the error appropriately, e.g., return an error response
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
 export const getUserPosts = async (req: Request, res: Response) => {
   try {
-
-    const user_id= req.params.user_id
+    const user_id = req.params.user_id;
     const procedureName = "getUserPosts";
-    const result = await execute(procedureName,{user_id});
-    return res.json(result.recordset);
+    const result = await execute(procedureName, { user_id });
+    const new_posts: any[] = [];
+
+    for (const element of result.recordset) {
+      const post_id = element.post_id;
+
+      const result2 = await execute("getPostLikes", { post_id });
+
+      element.likes = result2.recordset;
+      new_posts.push(element);
+    }
+
+    return res.json({ new_posts });
   } catch (error) {
     console.log(error);
   }

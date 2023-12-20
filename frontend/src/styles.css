@@ -866,7 +866,7 @@ body {
   width: 90%;
   height: 50px;
   background-color: #f04b2e;
-  margin-top: 20px;
+  margin: 20px;
 }
 .settings_content form button:hover {
   background-color: #ff5e3a;

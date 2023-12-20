@@ -44,6 +44,12 @@ export class UserService {
       headers: this.getHeadersWithToken(token),
     });
   }
+  updateUserPassword(user: any, token: string): Observable<any> {
+    const url = `${this.baseUrl}/password`;
+    return this.http.post(url, user, {
+      headers: this.getHeadersWithToken(token),
+    });
+  }
 
   // Delete user by ID
   deleteUserById(userId: string, token: string): Observable<any> {
@@ -74,9 +80,11 @@ export class UserService {
   }
 
   updateUserImage(userDetails: any, token: string): Observable<any> {
-    const url = `${this.baseUrl}/profile`
+    const url = `${this.baseUrl}/profile`;
 
-    return  this.http.post(url, userDetails, { headers: this.getHeadersWithToken(token) });
+    return this.http.post(url, userDetails, {
+      headers: this.getHeadersWithToken(token),
+    });
   }
 
   // Helper function to get headers

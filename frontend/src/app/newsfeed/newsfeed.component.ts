@@ -27,7 +27,7 @@ export class NewsfeedComponent implements OnInit {
   userName: string | null = localStorage.getItem('user_name');
   totalLikes!: number;
   postDetails!: any;
-
+  userId = localStorage.getItem('user_id');
   showEditCommentForm = false;
   editCommentForm!: FormGroup;
 
@@ -162,6 +162,10 @@ export class NewsfeedComponent implements OnInit {
     }
   }
 
+  isUserLiked(likes: any[], userId: string | null): boolean {
+    return likes.some((like) => like.user_id === userId);
+  }
+
   fetchPosts() {
     if (!this.token) {
       console.error('Token not found.');
@@ -171,7 +175,7 @@ export class NewsfeedComponent implements OnInit {
     try {
       this.postService.getAllPosts(this.token).subscribe((res) => {
         console.log(res);
-        this.posts = res;
+        this.posts = res.new_posts;
       });
     } catch (error) {
       console.log(error);
@@ -367,7 +371,7 @@ export class NewsfeedComponent implements OnInit {
           .subscribe((res) => {
             console.log(res);
 
-            this.fetchPosts()
+            this.fetchPosts();
 
             // Check the response and update isPostLiked accordingly
             this.isPostLiked = res.message === 'Post Liked';

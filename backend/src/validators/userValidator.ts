@@ -32,6 +32,16 @@ export const validateUpdateuser = Joi.object().keys({
   user_id: Joi.string().min(8).required(),
 });
 
+export const validateUserPassword = Joi.object().keys({
+  user_id:Joi.string().required(),
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().pattern(
+    new RegExp(
+      "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
+    )
+  ),
+});
+
 export const validateResetpassword = Joi.object().keys({
   user_id: Joi.string().min(8).required(),
   password: Joi.string().pattern(

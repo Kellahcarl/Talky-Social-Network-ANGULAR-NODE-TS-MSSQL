@@ -9,6 +9,7 @@ import {
   validateResetpassword,
   validateUpdateuser,
   validateUserEmail,
+  validateUserPassword,
   validateuserId,
 } from "../validators/userValidator";
 import { comparePass, hashPass } from "../services/passwordHash";
@@ -179,6 +180,61 @@ export const updateUser = async (req: Request, res: Response) => {
     // console.log(params);
 
     await execute(procedureName, params);
+    return res.send({ message: "User updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      error: (error as Error).message,
+      message: "Internal Sever Error",
+    });
+  }
+};
+
+export const updateUserPassword = async (req: Request, res: Response) => {
+  try {
+    let { oldPassword, newPassword, user_id } = req.body;
+
+    console.log(req.body);
+
+    const procedureName = "getUserById";
+
+    if (!user_id)
+      return res.status(400).json({
+        error: "please check if entered password and email are correct",
+      });
+
+    const result = await execute(procedureName, { user_id });
+    if (result) {
+      const recordset = result.recordset;
+      const user = recordset[0];
+
+      // console.log(user);
+
+      if (!user) {
+        return res.status(404).json({ error: "Account does not exist" });
+      }
+
+      // console.log(oldPassword, user.password);
+
+      const validPassword = await comparePass(oldPassword, user.password);
+
+      if (!validPassword) {
+        return res.status(404).json({ error: "Invalid password" });
+      }
+
+      const { error } = validateUserPassword.validate(req.body);
+      console.log(error);
+
+      if (error)
+        return res
+          .status(400)
+          .send({ error: "check input infomation if its correct" });
+    }
+
+    const procedureName2 = "updateUserPassword";
+    const Password = await hashPass(newPassword);
+
+    await execute(procedureName2, { newPassword:Password, user_id });
     return res.send({ message: "User updated successfully" });
   } catch (error) {
     console.log(error);

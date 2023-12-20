@@ -13,7 +13,7 @@ import { FriendsComponent } from './friends/friends.component';
 import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './profile/profile.component';
 
-import { PersonalInfoComponent } from './settings/personal-info/personal-info.component';
+
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { AettingsComponent } from './settings/aettings/aettings.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
@@ -35,8 +35,6 @@ import { FollowingComponent } from './following/following.component';
     FriendsComponent,
     AboutComponent,
     ProfileComponent,
-
-    PersonalInfoComponent,
     ChangePasswordComponent,
     AettingsComponent,
     LandingComponent,

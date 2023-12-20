@@ -1,12 +1,40 @@
- <div id="splashContainer">
-    
-        <div id="splashTitle"><h2>T a l k y</h2></div>
-        <div id="splashImage">
-            <div id="splashHeadline">
-                <h1>Getting started with Talky</h1>
-            </div>
-            <div id="splashButton">
-                <button class="defaultButton">GET 25$ OFF</button>
-            </div>
-        </div>
+<div id="splashContainer">
+  <div id="splashTitle"><h2>T a l k y</h2></div>
+  <div id="splashImage">
+    <div id="splashHeadline">
+      <h1>Getting started with Talky</h1>
     </div>
+    <div id="splashButton">
+      <button
+        routerLink="/login"
+        class="defaultButton add-friend"
+        style="
+          padding: 20px;
+          margin: 20px;
+          outline: none;
+          border: none;
+          border-radius: 10px;
+          color: white;
+          cursor: pointer;
+        "
+      >
+        Login
+      </button>
+      <button
+        routerLink="/register"
+        class="defaultButton delete-friend"
+        style="
+          padding: 20px;
+          margin: 20px;
+          outline: none;
+          border: none;
+          border-radius: 10px;
+          color: white;
+          cursor: pointer;
+        "
+      >
+        Register
+      </button>
+    </div>
+  </div>
+</div>

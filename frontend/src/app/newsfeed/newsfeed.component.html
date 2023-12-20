@@ -105,20 +105,21 @@
         <div class="feed_footer">
           <ul class="feed_footer_left">
             <li
-              class="hover-orange selected-orange"
-              (click)="toggleLike(post.post_id)"
-              style="display: flex; align-content: center"
-            >
-              <i
-                class="fa"
-                style="padding: 1rem"
-                [ngClass]="{
-                  'fa-heart': isPostLiked,
-                  'fa-heart-o': !isPostLiked
-                }"
-              ></i>
-              <p>{{ post.like_count }} Likes</p>
-            </li>
+  class="hover-orange selected-orange"
+  (click)="toggleLike(post.post_id)"
+  style="display: flex; align-content: center"
+>
+  <i
+    class="fa"
+    style="padding: 1rem"
+    [ngClass]="{
+      'fa-heart': isUserLiked(post.likes, userId),
+      'fa-heart-o': !isUserLiked(post.likes, userId)
+    }"
+  ></i>
+  <p>{{ post.like_count }} Likes</p>
+</li>
+
           </ul>
           <ul class="feed_footer_right">
             <li
