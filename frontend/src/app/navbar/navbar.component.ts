@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,20 +7,43 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
+  profilePic: string | null = localStorage.getItem('profilePic');
+  user_name: string | null = localStorage.getItem('user_name');
+  isMobileMenuOpen: boolean = false; // Track the mobile menu state
 
-  profilePic: string | null = localStorage.getItem('profilePic')
-  
-  user_name : string|null = localStorage.getItem('user_name')
-  constructor (private router: Router) { }
-  
+  constructor(private router: Router) {}
+
   logoutUser = () => {
     localStorage.clear();
     this.router.navigate(['/login']);
-    
-    // console.log(localStorage.getItem('token'));
   };
+
   isAuthenticated = (): boolean => {
     const token = localStorage.getItem('token');
     return !!token;
   };
+
+  // Use ViewChild to reference the mobile menu element
+  @ViewChild('mobileMenuRef', { static: false }) mobileMenuRef!: ElementRef;
+
+  // Method to toggle the mobile menu state
+  toggleMobileMenu() {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+  }
+
+  // Method to close the mobile menu
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+  }
+
+  // Close the menu when clicking outside the mobile menu
+  @HostListener('document:click', ['$event'])
+  onClick(event: any) {
+    if (
+      this.isMobileMenuOpen &&
+      !this.mobileMenuRef.nativeElement.contains(event.target)
+    ) {
+      this.closeMobileMenu();
+    }
+  }
 }
