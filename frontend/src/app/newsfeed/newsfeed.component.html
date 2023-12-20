@@ -36,25 +36,41 @@
         </div>
         <form [formGroup]="postForm" (ngSubmit)="sharePost()">
           <div class="publish_textarea">
-            <img
-              class="border-radius-image"
-              src="../../assets/images/user.jpg"
-              alt=""
-            />
-            <div style="display: flex; flex-direction: column">
+            <img class="border-radius-image" src="{{ profilePic }}" alt="" />
+            <div
+              style="display: flex; flex-direction: column"
+              style="width: 100%"
+            >
               <textarea
                 type="text"
-                placeholder="Whats up, John?"
+                style="width: 75%"
+                placeholder="write a caption {{ userName }}"
                 style="resize: none"
                 formControlName="caption"
               ></textarea>
-              <div
-                *ngIf="
-                  selectedPostType === 'image' || selectedPostType === 'video'
-                "
-              >
-                <ngx-dropzone (change)="onSelectPostImage($event)">
+              <div style="width: 90%" *ngIf="selectedPostType === 'image'">
+                <ngx-dropzone
+                  (change)="onSelectPostImage($event)"
+                  style="width: 100%"
+                >
                   <ngx-dropzone-label>Drop Post Image</ngx-dropzone-label>
+                  <ngx-dropzone-preview
+                    *ngFor="let f of postFiles"
+                    [removable]="true"
+                    (removed)="onRemovePostImage(f)"
+                  >
+                    <ngx-dropzone-label
+                      >{{ f.name }} ({{ f.type }})</ngx-dropzone-label
+                    >
+                  </ngx-dropzone-preview>
+                </ngx-dropzone>
+              </div>
+              <div style="width: 90%" *ngIf="selectedPostType === 'video'">
+                <ngx-dropzone
+                  (change)="onSelectPostImage($event)"
+                  style="width: 100%"
+                >
+                  <ngx-dropzone-label>Drop Post Video</ngx-dropzone-label>
                   <ngx-dropzone-preview
                     *ngFor="let f of postFiles"
                     [removable]="true"
@@ -105,21 +121,20 @@
         <div class="feed_footer">
           <ul class="feed_footer_left">
             <li
-  class="hover-orange selected-orange"
-  (click)="toggleLike(post.post_id)"
-  style="display: flex; align-content: center"
->
-  <i
-    class="fa"
-    style="padding: 1rem"
-    [ngClass]="{
-      'fa-heart': isUserLiked(post.likes, userId),
-      'fa-heart-o': !isUserLiked(post.likes, userId)
-    }"
-  ></i>
-  <p>{{ post.like_count }} Likes</p>
-</li>
-
+              class="hover-orange selected-orange"
+              (click)="toggleLike(post.post_id)"
+              style="display: flex; align-content: center"
+            >
+              <i
+                class="fa"
+                style="padding: 1rem"
+                [ngClass]="{
+                  'fa-heart': isUserLiked(post.likes, userId),
+                  'fa-heart-o': !isUserLiked(post.likes, userId)
+                }"
+              ></i>
+              <p>{{ post.like_count }} Likes</p>
+            </li>
           </ul>
           <ul class="feed_footer_right">
             <li
