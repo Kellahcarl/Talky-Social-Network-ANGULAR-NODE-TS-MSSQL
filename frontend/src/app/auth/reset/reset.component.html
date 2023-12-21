@@ -18,6 +18,7 @@
             name="user"
             formControlName="user_id"
             placeholder="Reset code"
+            data-cy="userID"
           />
           <span class="focus-input100"></span>
           <span class="symbol-input100">
@@ -32,6 +33,7 @@
           <input
             class="input100"
             type="password"
+            data-cy="userPassword"
             name="pass"
             formControlName="password"
             placeholder="Password"
@@ -51,6 +53,7 @@
             type="password"
             name="pass"
             formControlName="confirmPassword"
+            data-cy="userConfirmPassword"
             placeholder="Confirm Password"
           />
           <span class="focus-input100"></span>
@@ -60,7 +63,7 @@
         </div>
 
         <div class="container-login100-form-btn">
-          <button type="submit" class="login100-form-btn">Register</button>
+          <button type="submit" class="login100-form-btn" data-cy="reset_user_btn">Register</button>
         </div>
 
         <div class="text-center p-t-136">

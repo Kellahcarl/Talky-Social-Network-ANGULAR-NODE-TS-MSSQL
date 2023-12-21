@@ -43,6 +43,7 @@
             >
               <textarea
                 type="text"
+                data-cy="textarea"
                 style="width: 75%"
                 placeholder="write a caption {{ userName }}"
                 style="resize: none"
@@ -96,12 +97,13 @@
                 <i class="fa fa-video-camera"></i>
               </li>
             </ul>
-            <button type="submit">Publish</button>
+            <button data-cy="publish-btn" type="submit">Publish</button>
           </div>
         </form>
       </div>
     </div>
-    <div class="row border-radius" *ngFor="let post of posts; let i = index">
+    
+    <div class="row border-radius" data-cy="feed" *ngFor="let post of posts; let i = index">
       <div class="feed" (mouseenter)="fetchPostDetails(post.post_id)">
         <div class="feed_title">
           <img src="{{ post.profileImage }}" alt="" />
@@ -182,7 +184,7 @@
               >
             </div>
             <div class="feedcomments-comment">
-              <p *ngIf="!showEditCommentForm">
+              <p *ngIf="!showEditCommentForm" class="editedcomment">
                 {{ comment.comment }}
               </p>
               <div class="row" *ngIf="showEditCommentForm">
@@ -193,6 +195,7 @@
                   <div class="comment_textarea">
                     <div>
                       <textarea
+                      class="editcomment"
                         type="text"
                         placeholder="Edit this comment"
                         style="resize: none"
@@ -200,7 +203,7 @@
                       ></textarea>
                     </div>
                     <div class="comment_icons">
-                      <button type="submit">Post Edited comment</button>
+                      <button class="editsubmit" type="submit">Post Edited comment</button>
                     </div>
                   </div>
                 </form>

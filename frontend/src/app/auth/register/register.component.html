@@ -16,6 +16,7 @@
             class="input100"
             type="text"
             name="user"
+            data-cy="user_name"
             formControlName="user_name"
             placeholder="Username"
           />
@@ -35,6 +36,7 @@
             name="email"
             formControlName="email"
             placeholder="Email"
+            data-cy="userEmail"
           />
           <span class="focus-input100"></span>
           <span class="symbol-input100">
@@ -52,6 +54,7 @@
             formControlName="fullName"
             name="fullName"
             placeholder="FullName"
+            data-cy="fullName"
           />
           <span class="focus-input100"></span>
           <span class="symbol-input100">
@@ -66,6 +69,7 @@
           <input
             class="input100"
             type="password"
+            data-cy="userPassword"
             name="pass"
             formControlName="password"
             placeholder="Password"
@@ -86,6 +90,7 @@
             name="pass"
             formControlName="confirmPassword"
             placeholder="Confirm Password"
+            data-cy="userConfirmPassword"
           />
           <span class="focus-input100"></span>
           <span class="symbol-input100">
@@ -94,7 +99,7 @@
         </div>
 
         <div class="container-login100-form-btn">
-          <button type="submit" class="login100-form-btn">Register</button>
+          <button type="submit" class="login100-form-btn" data-cy="register_user_btn">Register</button>
         </div>
 
         <div class="text-center p-t-136">

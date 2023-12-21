@@ -13,7 +13,6 @@ import { FriendsComponent } from './friends/friends.component';
 import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './profile/profile.component';
 
-
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { AettingsComponent } from './settings/aettings/aettings.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
@@ -23,6 +22,8 @@ import { LandingComponent } from './landing/landing.component';
 import { FollowersComponent } from './followers/followers.component';
 import { FollowingComponent } from './following/following.component';
 import { UserSearchPipe } from './pipes/user-search.pipe';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,9 @@ import { UserSearchPipe } from './pipes/user-search.pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    // NgxLoadingModule.forRoot({}),
+
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

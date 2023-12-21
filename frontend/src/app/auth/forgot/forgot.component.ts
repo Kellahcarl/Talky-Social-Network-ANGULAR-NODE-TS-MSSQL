@@ -45,11 +45,12 @@ export class ForgotComponent {
               this.forgotForm.reset();
             });
           }
-
-          if (res.error) {
+        },
+        (err) => {
+          if (err.error.error) {
             Swal.fire({
               title: 'Error!',
-              text: `${res.error}`,
+              text: `${err.error.error}`,
               icon: 'error',
               confirmButtonText: 'Ok',
               didRender: () => {
@@ -60,16 +61,6 @@ export class ForgotComponent {
               this.forgotForm.reset();
             });
           }
-        },
-        (err) => {
-          Swal.fire({
-            title: 'Error!',
-            text: 'enter a valid email!',
-            icon: 'error',
-            confirmButtonText: 'Ok',
-          }).then((result) => {
-            this.forgotForm.reset();
-          });
         }
       );
     }

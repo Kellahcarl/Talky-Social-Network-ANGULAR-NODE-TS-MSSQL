@@ -18,7 +18,7 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder,
     private loginService: UserService,
-    private followService : FollowService
+    private followService: FollowService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -38,7 +38,6 @@ export class LoginComponent {
           }
 
           // console.log(response.token);
-          
 
           Swal.fire({
             icon: 'success',
@@ -60,36 +59,29 @@ export class LoginComponent {
               // console.log(data);
 
               if ('info' in data) {
-
-                
-
-               
-               
-                  localStorage.setItem('user_name', data.info.user_name!);
+                localStorage.setItem('user_name', data.info.user_name!);
                 localStorage.setItem('user_id', data.info.user_id);
                 localStorage.setItem('profilePic', data.info.profileImage);
-                  this.router.navigate(['/newsfeed']);
+                this.router.navigate(['/newsfeed']);
                 // }
               }
             });
         }
-        if (response.error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Please try Again',
-            text: `${response.error}`,
-            didRender: () => {
-              const errorMessage = document.querySelector('.swal2-title');
-              errorMessage!.setAttribute('data-cy', 'logged-in-error-popup');
-            },
-          });
-          setTimeout(() => {
-            this.loginForm.reset();
-          }, 5000);
-        }
       },
       (error) => {
-        // Handle errors
+        Swal.fire({
+          icon: 'error',
+          title: 'Please try Again',
+          text: `${error.error.error}`,
+          didRender: () => {
+            const errorMessage = document.querySelector('.swal2-title');
+            errorMessage!.setAttribute('data-cy', 'logged-in-error-popup');
+          },
+        });
+        setTimeout(() => {
+          this.loginForm.reset();
+        }, 5000);
+
         console.log(error);
       }
     );

@@ -73,23 +73,26 @@ export class RegisterComponent {
               this.router.navigate(['/login']);
             }, 2000);
           }
-          if (response.error) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Please try Again',
-              text: `${response.error}`,
-              didRender: () => {
-                const errorMessage = document.querySelector('.swal2-title');
-                errorMessage!.setAttribute('data-cy', 'registered-error-popup');
-              },
-            });
-            setTimeout(() => {
-              this.registrationForm.reset();
-            }, 5000);
-          }
+         
         }, (error) => {
-          // Handle errors
-          console.log(error);
+           
+             Swal.fire({
+               icon: 'error',
+               title: 'Please try Again',
+               text: `${error.error.error}`,
+               didRender: () => {
+                 const errorMessage = document.querySelector('.swal2-title');
+                 errorMessage!.setAttribute(
+                   'data-cy',
+                   'registered-error-popup'
+                 );
+               },
+             });
+             setTimeout(() => {
+               this.registrationForm.reset();
+             }, 5000);
+           
+          console.log(error.error.error);
         })
     }
   }

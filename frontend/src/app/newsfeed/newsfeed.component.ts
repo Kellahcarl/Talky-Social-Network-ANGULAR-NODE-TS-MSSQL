@@ -8,6 +8,8 @@ import { CommentService } from '../services/comments/comment.service';
 import { Comment, editComment } from '../interfaces/comment';
 import Swal from 'sweetalert2';
 import { FollowService } from '../services/follow/follow.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 @Component({
@@ -38,7 +40,7 @@ export class NewsfeedComponent implements OnInit {
     private upload: CloudinaryService,
     private postService: PostService,
     private commentService: CommentService,
-    private followService: FollowService
+    private followService: FollowService,private spinner: NgxSpinnerService
   ) {
     this.postForm = this.formBuilder.group({
       postImage: '',
@@ -52,6 +54,7 @@ export class NewsfeedComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.spinner.show();
     this.fetchPosts();
     this.GetUserFollowCounts()
   }
@@ -257,9 +260,31 @@ export class NewsfeedComponent implements OnInit {
         this.commentService
           .createComment(details, this.token)
           .subscribe((res) => {
+
+            Swal.fire({
+              icon: 'success',
+              title: 'You have Logged In Successfully',
+              text: `${res.message}`,
+              timer: 1000,
+              
+            });
             // console.log(res);
             this.commentForm.reset();
             this.fetchComments(post_id);
+          }, error => {
+            console.log(error.error.error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Please try Again',
+              text: `${error.error.error}`,
+              didRender: () => {
+                const errorMessage = document.querySelector('.swal2-title');
+                errorMessage!.setAttribute('data-cy', 'logged-in-error-popup');
+              },
+            });
+            setTimeout(() => {
+              this.commentForm.reset();
+            }, 3000);
           });
       }
     } catch (error) {

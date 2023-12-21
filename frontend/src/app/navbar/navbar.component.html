@@ -51,14 +51,16 @@
 </div>
 
 <!-- NavMobile -->
-<div class="mobilemenu" class="mobilemenu" #mobileMenuRef (click)="closeMobileMenu()">
+<div
+  class="mobilemenu"
+  class="mobilemenu"
+  #mobileMenuRef
+  (click)="closeMobileMenu()"
+>
   <div class="mobilemenu_profile">
     <img id="mobilemenu_portada" src="../../assets/images/portada.jpg" />
     <div class="mobilemenu_profile">
-      <img
-        id="mobilemenu_profile_pic"
-        src="../../assets/images/user.jpg"
-      /><br />
+      <img id="mobilemenu_profile_pic" src="{{ profilePic }}" /><br />
       <span
         >Jonh Hamstrong<br />
         <p>150k followers / 50 follow</p></span

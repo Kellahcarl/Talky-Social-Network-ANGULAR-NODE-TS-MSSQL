@@ -66,23 +66,23 @@ export class ResetComponent {
               this.router.navigate(['/login']);
             }, 2000);
           }
-          if (response.error) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Please try Again',
-              text: `${response.error}`,
-              didRender: () => {
-                const errorMessage = document.querySelector('.swal2-title');
-                errorMessage!.setAttribute('data-cy', 'reset-error-popup');
-              },
-            });
-            setTimeout(() => {
-              this.resetForm.reset();
-            }, 5000);
-          }
+          
         },
         (error) => {
-          // Handle errors
+         
+           Swal.fire({
+             icon: 'error',
+             title: 'Please try Again',
+             text: `${error.error.error}`,
+             didRender: () => {
+               const errorMessage = document.querySelector('.swal2-title');
+               errorMessage!.setAttribute('data-cy', 'reset-error-popup');
+             },
+           });
+           setTimeout(() => {
+             this.resetForm.reset();
+           }, 5000);
+         
           console.log(error);
         }
       );
