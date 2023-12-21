@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { execute, handleTVP, query } from "../services/dbconnect";
+import { execute,  query } from "../services/dbconnect";
 import { v4 as uuidv4 } from "uuid";
 import { forEach, isEmpty } from "lodash";
 import { createPostSchema } from "../validators/postValidator";
@@ -33,36 +33,36 @@ export const createPost = async (req: Request, res: Response) => {
     }
 
     // Check for tagged users in the caption
-    if (caption.includes("@")) {
-      const usernamesTagged = caption.match(/@(\S+)/g) || [];
+    // if (caption.includes("@")) {
+    //   const usernamesTagged = caption.match(/@(\S+)/g) || [];
 
-      const taggedUserPromises = usernamesTagged.map(
-        async (usernameTagged: string) => {
-          const user_name = usernameTagged.substring(1); // Remove the @ symbol
+    //   const taggedUserPromises = usernamesTagged.map(
+    //     async (usernameTagged: string) => {
+    //       const user_name = usernameTagged.substring(1); // Remove the @ symbol
 
-          const userExists = (await execute("getUserByUsername", { user_name }))
-            .recordset;
+    //       const userExists = (await execute("getUserByUsername", { user_name }))
+    //         .recordset;
 
-          if (!isEmpty(userExists)) {
-            const user_id = userExists[0].user_id;
-            const post_user_tag_id = uuidv4();
+    //       if (!isEmpty(userExists)) {
+    //         const user_id = userExists[0].user_id;
+    //         const post_user_tag_id = uuidv4();
 
-            let result = await execute("addToPostTaggedTable", {
-              post_user_tag_id,
-              post_id,
-              user_id,
-            });
+    //         let result = await execute("addToPostTaggedTable", {
+    //           post_user_tag_id,
+    //           post_id,
+    //           user_id,
+    //         });
 
-            if (result.rowsAffected[0] === 0) {
-              throw new Error("Something went wrong, user not added to tags");
-            }
-          }
-        }
-      );
+    //         if (result.rowsAffected[0] === 0) {
+    //           throw new Error("Something went wrong, user not added to tags");
+    //         }
+    //       }
+    //     }
+    //   );
 
-      // Wait for all tagged user promises to resolve
-      await Promise.all(taggedUserPromises);
-    }
+    //   // Wait for all tagged user promises to resolve
+    //   await Promise.all(taggedUserPromises);
+    // }
 
     // Send the response after all media is created and tagged users are processed
     return res.status(200).json({

@@ -153,7 +153,7 @@ export const updateUser = async (req: Request, res: Response) => {
   try {
     let { user_id, user_name, profileImage, fullName } = req.body;
 
-    console.log(profileImage);
+    // console.log(profileImage);
 
     // if (profileImage === "") {
     //   profileImage =

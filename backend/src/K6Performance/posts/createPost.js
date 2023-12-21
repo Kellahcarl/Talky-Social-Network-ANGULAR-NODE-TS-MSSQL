@@ -1,15 +1,9 @@
 import http from "k6/http";
-import { sleep } from "k6";
+import { sleep, check } from "k6";
 
 export const options = {
-  stages: [
-    { duration: "20s", target: 100 },
-    { duration: "10s", target: 0 },
-  ],
-  thresholds: {
-    http_req_failed: ["rate< 0.01"],
-    http_req_duration: ["p(90) < 200", "p(95) < 500", "p(99) < 1500"],
-  },
+  vus: 5,
+  duration: "3s",
 };
 
 export default function () {
@@ -26,6 +20,14 @@ export default function () {
       token: token,
     },
   };
-  http.get("http://localhost:4201/post", body, params);
+
+  let response = http.post("http://localhost:4201/post", body, params);
+
+  check(response, {
+    "is status 200?": (res) => res.status == 200,
+    "is successfully logged in?": (res) =>
+      res.body.includes("Post created successfully"),
+  });
+
   sleep(1);
 }

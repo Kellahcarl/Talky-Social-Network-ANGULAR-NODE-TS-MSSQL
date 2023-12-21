@@ -54,16 +54,3 @@ export const execute = async (
 //   };
 //     const result = await execute(procedureName, params);
 
-export async function handleTVP(parameterName: string, values: any[]) {
-  await poolConnect;
-
-  try {
-    const request = new sql.Request(pool);
-    // Assuming mssql.TVP is only used for UserIds
-    request.input(parameterName, sql.TVP, values);
-    const result = await request.execute("fetchPostsForUsers"); // Replace with your actual stored procedure name
-    return result;
-  } catch (error) {
-    throw new Error(`Error executing stored procedure with TVP: ${error}`);
-  }
-}

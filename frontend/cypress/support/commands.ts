@@ -48,19 +48,5 @@ Cypress.Commands.add('loginUser', () => {
    cy.location('pathname').should('eq', '/newsfeed');
 });
 
-Cypress.Commands.add('addProduct', () => {
-  it('adds to cart', () => {
-    cy.visit('/products');
 
-    cy.get('[data-cy=product]:first').trigger('mouseover');
-
-    // Check if the features div is visible
-    cy.get('.features-card').should('be.visible');
-
-    // Click the "Add to cart" button of the first product, forcing the click
-    cy.get('[data-cy=product]:first [data-cy=addToCart]').click({
-      force: true,
-    });
-  });
-});
 

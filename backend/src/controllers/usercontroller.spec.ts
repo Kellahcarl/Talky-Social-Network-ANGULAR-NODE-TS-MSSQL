@@ -35,6 +35,7 @@ describe("users controller", () => {
         user_name: "diana",
         email: "dianaaberi12@gmail.com",
         password: "@Santa2023",
+        fullName: "Daniel Kinyi",
       },
     } as any;
 
@@ -100,6 +101,7 @@ describe("users controller", () => {
         user_name: "diana",
         email: "dianaaberi12@gmail.com",
         password: "@Santa2023",
+        fullName: "Daniel Kinyi",
       },
     };
 
@@ -220,7 +222,9 @@ describe("users controller", () => {
       body: {
         user_id: "28e61f6e-e838-41c7-a155-380a84d78871",
         user_name: "caleb",
-        email: "baraka606@student.mmarau.ac.ke",
+        fullName: "Daniel Kinyi",
+        profileImage:
+          "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=1434&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
     };
 
@@ -234,7 +238,9 @@ describe("users controller", () => {
     expect(execute).toHaveBeenCalledWith("updateUser", {
       user_id: "28e61f6e-e838-41c7-a155-380a84d78871",
       user_name: "caleb",
-      email: "baraka606@student.mmarau.ac.ke",
+      fullName: "Daniel Kinyi",
+      profileImage:
+        "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=1434&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     });
 
     expect(response.send).toHaveBeenCalledWith({
@@ -259,7 +265,7 @@ describe("users controller", () => {
     // Ensure the response is sent with the correct error message and status code
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.send).toHaveBeenCalledWith({
-      error: "check full name & email if they are correct",
+      error: "check input infomation if its correct",
     });
   });
 
