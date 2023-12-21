@@ -13,8 +13,8 @@
     />
   </div>
 
-  <div class="navbar_user" id="profilemodal" style="cursor: pointer">
-    <img src="{{ profilePic }}" alt="" />
+  <div *ngIf="isAuthenticated()" class="navbar_user" id="profilemodal" style="cursor: pointer">
+    <img src="{{ !profilePic ?  'https://th.bing.com/th/id/OIP._tSfQ4W6y7yLOqxMejgq2wHaHg?rs=1&pid=ImgDetMain' :  profilePic  }}" alt="" />
     <span id="navbar_user_top"
       >{{ user_name }}<br />
       <p>User</p></span
@@ -53,14 +53,14 @@
 <!-- NavMobile -->
 <div
   class="mobilemenu"
-  class="mobilemenu"
+  class="mobilemenu" *ngIf="isAuthenticated()"
   #mobileMenuRef
   (click)="closeMobileMenu()"
 >
   <div class="mobilemenu_profile">
     <img id="mobilemenu_portada" src="../../assets/images/portada.jpg" />
     <div class="mobilemenu_profile">
-      <img id="mobilemenu_profile_pic" src="{{ profilePic }}" /><br />
+      <img id="mobilemenu_profile_pic" src="{{ !profilePic ?  'https://th.bing.com/th/id/OIP._tSfQ4W6y7yLOqxMejgq2wHaHg?rs=1&pid=ImgDetMain' :  profilePic }}" /><br />
       <span
         >Jonh Hamstrong<br />
         <p>150k followers / 50 follow</p></span

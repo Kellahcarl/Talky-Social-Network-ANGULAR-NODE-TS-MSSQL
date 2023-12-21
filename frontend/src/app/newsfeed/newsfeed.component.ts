@@ -56,7 +56,9 @@ export class NewsfeedComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.fetchPosts();
-    this.GetUserFollowCounts()
+    this.GetUserFollowCounts() 
+    console.log(this.profilePic);
+    
   }
   onSelectPostImage(event: any) {
     // console.log(event);

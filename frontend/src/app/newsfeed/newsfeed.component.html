@@ -4,7 +4,7 @@
     <div class="left_row_profile">
       <img id="portada" src="../../assets/images/portada.jpg" />
       <div class="left_row_profile">
-        <img id="profile_pic" src="{{ profilePic }}" />
+        <img id="profile_pic" src="{{ !profilePic?  'https://th.bing.com/th/id/OIP._tSfQ4W6y7yLOqxMejgq2wHaHg?rs=1&pid=ImgDetMain' :  profilePic  }}" />
         <span
           >{{ userName }}<br />
           <p>{{followers}} followers / {{followings}} following</p></span
@@ -36,7 +36,7 @@
         </div>
         <form [formGroup]="postForm" (ngSubmit)="sharePost()">
           <div class="publish_textarea">
-            <img class="border-radius-image" src="{{ profilePic }}" alt="" />
+            <img class="border-radius-image" src="{{ !profilePic ?  'https://th.bing.com/th/id/OIP._tSfQ4W6y7yLOqxMejgq2wHaHg?rs=1&pid=ImgDetMain' :  profilePic }}" alt="no image" />
             <div
               style="display: flex; flex-direction: column"
               style="width: 100%"
@@ -106,7 +106,7 @@
     <div class="row border-radius" data-cy="feed" *ngFor="let post of posts; let i = index">
       <div class="feed" (mouseenter)="fetchPostDetails(post.post_id)">
         <div class="feed_title">
-          <img src="{{ post.profileImage }}" alt="" />
+          <img src="{{ !post.profileImage?  'https://th.bing.com/th/id/OIP._tSfQ4W6y7yLOqxMejgq2wHaHg?rs=1&pid=ImgDetMain' :  post.profileImage  }}" alt="no image" />
           <span
             ><b>{{ post.fullName }}</b> shared a <a routerLink="photos">Post</a
             ><br />
@@ -117,7 +117,7 @@
           <div class="feed_content_image">
             <p>{{ post.caption }}</p>
 
-            <img src="{{ post.postImage }}" alt="" />
+            <img *ngIf="post.postImage" src="{{ post.postImage }}" alt="" />
           </div>
         </div>
         <div class="feed_footer">
@@ -158,7 +158,7 @@
             (ngSubmit)="createComment(post.post_id)"
           >
             <div class="comment_textarea">
-              <img class="border-radius-image" src="{{ profilePic }}" alt="" />
+              <img class="border-radius-image" src="{{ !profilePic ?  'https://th.bing.com/th/id/OIP._tSfQ4W6y7yLOqxMejgq2wHaHg?rs=1&pid=ImgDetMain' :  profilePic  }}" alt="no image" />
               <div>
                 <textarea
                   type="text"
@@ -176,7 +176,7 @@
         <ul>
           <li *ngFor="let comment of comments">
             <div class="feedcomments-user">
-              <img src="{{ comment.comment_user_profile_image }}" />
+              <img src="{{ !comment.comment_user_profile_image ?  'https://th.bing.com/th/id/OIP._tSfQ4W6y7yLOqxMejgq2wHaHg?rs=1&pid=ImgDetMain' :  comment.comment_user_profile_image  }}" />
               <span
                 ><b>{{ comment.post_user_name }}</b
                 ><br />

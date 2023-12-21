@@ -5,7 +5,7 @@
             <div class="left_row_profile">
                 <img id="portada" src="../../../assets/images/portada.jpg" />
                 <div class="left_row_profile">
-                    <img id="profile_pic" src={{profilePic}}/>
+                    <img id="profile_pic" src="{{!profilePic ?  'https://th.bing.com/th/id/OIP._tSfQ4W6y7yLOqxMejgq2wHaHg?rs=1&pid=ImgDetMain' :  profilePic }}"/>
                     <span>{{userName}}<br><p>{{followers}} followers / {{followings}} followings</p></span>
                 </div>
             </div>
